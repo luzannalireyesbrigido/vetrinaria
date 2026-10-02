@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Animal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand">HEALTH ANIMAL</div>
+
+      <div id="loginBox">
+        <h1>Bienvenido</h1>
+        <p class="muted">Inicia sesión para administrar tus mascotas.</p>
+
+        <form id="loginForm">
+          <label>Correo electrónico</label>
+          <input id="loginEmail" type="email" required placeholder="correo@ejemplo.com">
+
+          <label>Contraseña</label>
+          <input id="loginPassword" type="password" required placeholder="••••••••">
+
+          <button class="btn btn-dark full" type="submit">Iniciar sesión</button>
+        </form>
+
+        <p class="switch-text">¿No tienes una cuenta?
+          <button type="button" class="link-btn" id="showRegister">Regístrate</button>
+        </p>
+      </div>
+
+      <div id="registerBox" class="hidden">
+        <h1>Crear cuenta</h1>
+        <p class="muted">Registra tus datos para guardar tus mascotas y citas.</p>
+
+        <form id="registerForm">
+          <label>Nombre completo</label>
+          <input id="registerName" type="text" required placeholder="Tu nombre">
+
+          <label>Correo electrónico</label>
+          <input id="registerEmail" type="email" required placeholder="correo@ejemplo.com">
+
+          <label>Contraseña</label>
+          <input id="registerPassword" type="password" minlength="6" required placeholder="Mínimo 6 caracteres">
+
+          <label>Confirmar contraseña</label>
+          <input id="registerPassword2" type="password" minlength="6" required placeholder="Repite tu contraseña">
+
+          <button class="btn btn-dark full" type="submit">Crear cuenta</button>
+        </form>
+
+        <p class="switch-text">¿Ya tienes una cuenta?
+          <button type="button" class="link-btn" id="showLogin">Iniciar sesión</button>
+        </p>
+      </div>
+
+      <div id="authMessage" class="message"></div>
+    </div>
+  </div>
+
+  <main id="app" class="hidden">
+    <header class="topbar">
+      <div class="brand">HEALTH ANIMAL</div>
+      <nav>
+        <button class="nav-btn active" data-section="inicio">Inicio</button>
+        <button class="nav-btn" data-section="mascotas">Mascotas</button>
+        <button class="nav-btn" data-section="citas">Citas</button>
+        <button class="nav-btn" data-section="historial">Historial médico</button>
+      </nav>
+      <div class="user-area">
+        <span id="userName"></span>
+        <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <section id="inicio" class="section active-section">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">SALUD Y CUIDADO</span>
+          <h1>Cuida a tus<br>mascotas</h1>
+          <p>Administra fácilmente tus citas, consulta el historial y lleva un seguimiento de vacunas y tratamientos.</p>
+          <div class="hero-actions">
+            <button class="btn btn-dark" data-section="citas">Agendar cita</button>
+            <button class="btn btn-light" data-section="mascotas">Ver información</button>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="pet-placeholder">🐾</div>
+        </div>
+      </div>
+
+      <div class="services">
+        <h2>Nuevos servicios</h2>
+        <div class="service-grid">
+          <button class="service-card" data-section="mascotas">
+            <span class="service-icon">🐶</span>
+            <strong>Registro de<br>mascotas</strong>
+            <small>Consulta y administra la información de tus mascotas.</small>
+          </button>
+          <button class="service-card" data-section="citas">
+            <span class="service-icon">📅</span>
+            <strong>Gestión de<br>citas</strong>
+            <small>Agenda y consulta tus próximas citas.</small>
+          </button>
+          <button class="service-card" data-section="historial">
+            <span class="service-icon">📋</span>
+            <strong>Historial<br>médico</strong>
+            <small>Consulta diagnósticos, tratamientos y vacunas.</small>
+          </button>
+        </div>
+      </div>
+
+      <div class="bottom-grid">
+        <div class="panel">
+          <div class="panel-title">
+            <h2>Próximas citas</h2>
+            <button class="text-btn" data-section="citas">Ver todas</button>
+          </div>
+          <div id="homeAppointments" class="home-list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <h2>Historial de tu mascota</h2>
+            <button class="text-btn" data-section="historial">Ver historial</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Mascota</th>
+                  <th>Consulta</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="homeHistoryTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mascotas" class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">MI CUENTA</span>
+          <h1>Mis mascotas</h1>
+          <p>Agrega y administra únicamente las mascotas de tu cuenta.</p>
+        </div>
+        <button class="btn btn-dark" id="openPetModal">+ Registrar mascota</button>
+      </div>
+      <div id="petsGrid" class="pets-grid"></div>
+    </section>
+
+    <section id="citas" class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">AGENDA</span>
+          <h1>Mis citas</h1>
+          <p>Consulta, agenda o cancela las citas de tus mascotas.</p>
+        </div>
+        <button class="btn btn-dark" id="openAppointmentModal">+ Agendar cita</button>
+      </div>
+
+      <div class="filters">
+        <label>Filtrar por mascota
+          <select id="appointmentPetFilter"></select>
+        </label>
+        <label>Estado
+          <select id="appointmentStatusFilter">
+            <option value="all">Todas</option>
+            <option value="Pendiente">Pendientes</option>
+            <option value="Completada">Completadas</option>
+            <option value="Cancelada">Canceladas</option>
+          </select>
+        </label>
+      </div>
+      <div id="appointmentsList" class="cards-list"></div>
+    </section>
+
+    <section id="historial" class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">SALUD</span>
+          <h1>Historial médico</h1>
+          <p>El historial mostrado pertenece solamente a tu cuenta y a tus mascotas.</p>
+        </div>
+        <button class="btn btn-dark" id="openHistoryModal">+ Agregar consulta</button>
+      </div>
+
+      <div class="filters">
+        <label>Selecciona mascota
+          <select id="historyPetFilter"></select>
+        </label>
+      </div>
+
+      <div class="table-wrap big-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Mascota</th>
+              <th>Consulta</th>
+              <th>Diagnóstico</th>
+              <th>Tratamiento</th>
+              <th>Veterinario</th>
+            </tr>
+          </thead>
+          <tbody id="historyTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <button class="close-modal" id="closeModal">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
